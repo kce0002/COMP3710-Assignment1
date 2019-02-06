@@ -2,20 +2,22 @@
 // COMP 3710 - 001
 // 2-5-19
 // Assignment 1
-// TODO: Add decimal formatting
 // TODO: Add log for each text change
-// TODO: Add log for exceptions
 // TODO: Add notification for invalid input
 // TODO: Add comments to everything
 
 package com.example.kyle.assignment5;
 
+import android.os.Environment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
+import java.io.BufferedWriter;
+import java.io.File;
+import java.io.IOException;
 import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
@@ -331,4 +333,6 @@ public class MainActivity extends AppCompatActivity {
         }
         return d;
     }
+
+
 }
