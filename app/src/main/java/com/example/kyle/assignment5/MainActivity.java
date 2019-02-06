@@ -5,6 +5,7 @@
 // TODO: Add decimal formatting
 // TODO: Add log for each text change
 // TODO: Add log for exceptions
+// TODO: Add notification for invalid input
 
 package com.example.kyle.assignment5;
 
