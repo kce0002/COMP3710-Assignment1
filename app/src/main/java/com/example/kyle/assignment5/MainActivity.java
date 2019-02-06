@@ -6,6 +6,7 @@
 // TODO: Add log for each text change
 // TODO: Add log for exceptions
 // TODO: Add notification for invalid input
+// TODO: Add comments to everything
 
 package com.example.kyle.assignment5;
 
