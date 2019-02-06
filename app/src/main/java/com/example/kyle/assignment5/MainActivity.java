@@ -2,13 +2,16 @@
 // COMP 3710 - 001
 // 2-5-19
 // Assignment 1
-// TODO: Add log for each text change
 // TODO: Add notification for invalid input
 // TODO: Add comments to everything
 
 package com.example.kyle.assignment5;
 
+import android.Manifest;
+import android.content.pm.PackageManager;
 import android.os.Environment;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -17,7 +20,9 @@ import android.widget.EditText;
 
 import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
+import java.sql.Timestamp;
 import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
@@ -37,10 +42,14 @@ public class MainActivity extends AppCompatActivity {
     boolean volumeCheck;
     DecimalFormat df;
 
+    public static String logFile = "/sdcard/converterLog.txt";
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
 
         df = new DecimalFormat("#.##");
 
@@ -61,6 +70,11 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     fahrenheitInput.setText("" + df.format(celsiusToFahrenheit(validateInput(celsiusInput.getText().toString()))));
+                    log("Celsius text changed.");
+                    log("Timestamp: " + System.currentTimeMillis());
+                    log("New value: " + validateInput(celsiusInput.getText().toString()));
+                    log("");
+
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -91,6 +105,10 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     celsiusInput.setText("" + df.format(fahrenheitToCelsius(validateInput(fahrenheitInput.getText().toString()))));
+                    log("Fahrenheit text changed.");
+                    log("Timestamp: " + System.currentTimeMillis());
+                    log("New value: " + validateInput(fahrenheitInput.getText().toString()));
+                    log("");
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -122,6 +140,10 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     miInput.setText("" + df.format(kmToMi(validateInput(kmInput.getText().toString()))));
+                    log("Kilometers text changed.");
+                    log("Timestamp: " + System.currentTimeMillis());
+                    log("New value: " + validateInput(kmInput.getText().toString()));
+                    log("");
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -152,6 +174,10 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     kmInput.setText("" + df.format(miToKm(validateInput(miInput.getText().toString()))));
+                    log("Miles text changed.");
+                    log("Timestamp: " + System.currentTimeMillis());
+                    log("New value: " + validateInput(miInput.getText().toString()));
+                    log("");
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -182,6 +208,10 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     lbInput.setText("" + df.format(kgToLb(validateInput(kgInput.getText().toString()))));
+                    log("Kilograms text changed.");
+                    log("Timestamp: " + System.currentTimeMillis());
+                    log("New value: " + validateInput(kgInput.getText().toString()));
+                    log("");
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -212,6 +242,10 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     kgInput.setText("" + df.format(lbToKg(validateInput(lbInput.getText().toString()))));
+                    log("Pounds text changed.");
+                    log("Timestamp: " + System.currentTimeMillis());
+                    log("New value: " + validateInput(lbInput.getText().toString()));
+                    log("");
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -242,6 +276,10 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     gallonInput.setText("" + df.format(litersToGallons(validateInput(literInput.getText().toString()))));
+                    log("Liters text changed.");
+                    log("Timestamp: " + System.currentTimeMillis());
+                    log("New value: " + validateInput(literInput.getText().toString()));
+                    log("");
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -272,6 +310,10 @@ public class MainActivity extends AppCompatActivity {
 
                 try {
                     literInput.setText("" + df.format(gallonsToLiters(validateInput(gallonInput.getText().toString()))));
+                    log("Gallons text changed.");
+                    log("Timestamp: " + System.currentTimeMillis());
+                    log("New value: " + validateInput(gallonInput.getText().toString()));
+                    log("");
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -332,6 +374,27 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         return d;
+    }
+
+    public void log(String msg) {
+        File f = new File(logFile);
+        if (!f.exists()) {
+            try {
+                f.createNewFile();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+        try {
+            BufferedWriter buff = new BufferedWriter(new FileWriter(logFile, true));
+            buff.append(msg);
+            buff.newLine();
+            buff.close();
+        }
+        catch (IOException e) {
+            e.printStackTrace();
+        }
+
     }
 
 
