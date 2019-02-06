@@ -1,17 +1,12 @@
 // Kyle Ehlers
 // COMP 3710 - 001
-// 2-5-19
+// 2-6-19
 // Assignment 1
-// TODO: Add notification for invalid input
-// TODO: Add comments to everything
 
 package com.example.kyle.assignment5;
 
 import android.Manifest;
-import android.content.pm.PackageManager;
-import android.os.Environment;
 import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.text.Editable;
@@ -22,11 +17,11 @@ import java.io.BufferedWriter;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
-import java.sql.Timestamp;
 import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
 
+    // EditText components:
     private EditText celsiusInput;
     private EditText fahrenheitInput;
     private EditText kmInput;
@@ -36,12 +31,16 @@ public class MainActivity extends AppCompatActivity {
     private EditText literInput;
     private EditText gallonInput;
 
+    // Toggle bools for keeping infinite loop from occuring:
     private boolean tempCheck;
     private boolean distanceCheck;
     private boolean massCheck;
     private boolean volumeCheck;
+
+    // Decimal Format for cleaner conversion viewing:
     private DecimalFormat df;
 
+    // Logfile constant:
     private static final String LOGFILE = "/sdcard/converterLog.txt";
 
     @Override
@@ -49,14 +48,26 @@ public class MainActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
 
+        // Request permission to write  to external storage:
         ActivityCompat.requestPermissions(MainActivity.this, new String[]{Manifest.permission.WRITE_EXTERNAL_STORAGE}, 1);
 
+        // Finalize decimal format:
         df = new DecimalFormat("#.##");
 
+        // Set toggle bools to false initially:
         tempCheck = false;
         distanceCheck = false;
         massCheck = false;
         volumeCheck = false;
+
+
+        /*
+          * Next several chunks of code each handle the EditText event listeners
+          *
+          * They update the corresponding EditText to give the converted value,
+          * and they log each event to /sdcard/converterLog.txt
+          *
+          */
 
         celsiusInput = findViewById(R.id.celsius);
         celsiusInput.addTextChangedListener(new TextWatcher() {
@@ -334,6 +345,7 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    // Utility methods for unit conversions:
     public static double celsiusToFahrenheit(double c) {
         return c * 1.8 + 32.0;
     }
@@ -366,16 +378,21 @@ public class MainActivity extends AppCompatActivity {
         return g / 0.26417;
     }
 
+
+    /* Data validation method. Makes sure the input is correct,
+    even though it only allows for numberDecimal inputs. */
     public static double validateInput(String input) {
-        double d = Double.MAX_VALUE;
+        double d = Double.MAX_VALUE ;
         try {
             d = Double.parseDouble(input);
         } catch (NumberFormatException e) {
+
             e.printStackTrace();
         }
         return d;
     }
 
+    // Event logging method:
     public void log(String msg) {
         File f = new File(LOGFILE);
         if (!f.exists()) {
