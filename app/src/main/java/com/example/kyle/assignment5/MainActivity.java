@@ -16,6 +16,8 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.widget.EditText;
 
+import java.text.DecimalFormat;
+
 public class MainActivity extends AppCompatActivity {
 
     EditText celsiusInput;
@@ -31,11 +33,14 @@ public class MainActivity extends AppCompatActivity {
     boolean distanceCheck;
     boolean massCheck;
     boolean volumeCheck;
+    DecimalFormat df;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        df = new DecimalFormat("#.##");
 
         tempCheck = false;
         distanceCheck = false;
@@ -53,7 +58,7 @@ public class MainActivity extends AppCompatActivity {
                 tempCheck = true;
 
                 try {
-                    fahrenheitInput.setText("" + celsiusToFahrenheit(validateInput(celsiusInput.getText().toString())));
+                    fahrenheitInput.setText("" + df.format(celsiusToFahrenheit(validateInput(celsiusInput.getText().toString()))));
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -83,7 +88,7 @@ public class MainActivity extends AppCompatActivity {
                 tempCheck = true;
 
                 try {
-                    celsiusInput.setText("" + fahrenheitToCelsius(validateInput(fahrenheitInput.getText().toString())));
+                    celsiusInput.setText("" + df.format(fahrenheitToCelsius(validateInput(fahrenheitInput.getText().toString()))));
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -114,7 +119,7 @@ public class MainActivity extends AppCompatActivity {
                 distanceCheck = true;
 
                 try {
-                    miInput.setText("" + kmToMi(validateInput(kmInput.getText().toString())));
+                    miInput.setText("" + df.format(kmToMi(validateInput(kmInput.getText().toString()))));
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -144,7 +149,7 @@ public class MainActivity extends AppCompatActivity {
                 distanceCheck = true;
 
                 try {
-                    kmInput.setText("" + miToKm(validateInput(miInput.getText().toString())));
+                    kmInput.setText("" + df.format(miToKm(validateInput(miInput.getText().toString()))));
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -174,7 +179,7 @@ public class MainActivity extends AppCompatActivity {
                 massCheck = true;
 
                 try {
-                    lbInput.setText("" + kgToLb(validateInput(kgInput.getText().toString())));
+                    lbInput.setText("" + df.format(kgToLb(validateInput(kgInput.getText().toString()))));
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -204,7 +209,7 @@ public class MainActivity extends AppCompatActivity {
                 massCheck = true;
 
                 try {
-                    kgInput.setText("" + lbToKg(validateInput(lbInput.getText().toString())));
+                    kgInput.setText("" + df.format(lbToKg(validateInput(lbInput.getText().toString()))));
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -234,7 +239,7 @@ public class MainActivity extends AppCompatActivity {
                 volumeCheck = true;
 
                 try {
-                    gallonInput.setText("" + litersToGallons(validateInput(literInput.getText().toString())));
+                    gallonInput.setText("" + df.format(litersToGallons(validateInput(literInput.getText().toString()))));
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
@@ -264,7 +269,7 @@ public class MainActivity extends AppCompatActivity {
                 volumeCheck = true;
 
                 try {
-                    literInput.setText("" + gallonsToLiters(validateInput(gallonInput.getText().toString())));
+                    literInput.setText("" + df.format(gallonsToLiters(validateInput(gallonInput.getText().toString()))));
                 } catch (Exception e) {
                     e.printStackTrace();
                 } finally {
