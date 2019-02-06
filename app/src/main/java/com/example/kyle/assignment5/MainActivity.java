@@ -27,22 +27,22 @@ import java.text.DecimalFormat;
 
 public class MainActivity extends AppCompatActivity {
 
-    EditText celsiusInput;
-    EditText fahrenheitInput;
-    EditText kmInput;
-    EditText miInput;
-    EditText kgInput;
-    EditText lbInput;
-    EditText literInput;
-    EditText gallonInput;
+    private EditText celsiusInput;
+    private EditText fahrenheitInput;
+    private EditText kmInput;
+    private EditText miInput;
+    private EditText kgInput;
+    private EditText lbInput;
+    private EditText literInput;
+    private EditText gallonInput;
 
-    boolean tempCheck;
-    boolean distanceCheck;
-    boolean massCheck;
-    boolean volumeCheck;
-    DecimalFormat df;
+    private boolean tempCheck;
+    private boolean distanceCheck;
+    private boolean massCheck;
+    private boolean volumeCheck;
+    private DecimalFormat df;
 
-    public static String logFile = "/sdcard/converterLog.txt";
+    private static final String LOGFILE = "/sdcard/converterLog.txt";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -377,7 +377,7 @@ public class MainActivity extends AppCompatActivity {
     }
 
     public void log(String msg) {
-        File f = new File(logFile);
+        File f = new File(LOGFILE);
         if (!f.exists()) {
             try {
                 f.createNewFile();
@@ -386,7 +386,7 @@ public class MainActivity extends AppCompatActivity {
             }
         }
         try {
-            BufferedWriter buff = new BufferedWriter(new FileWriter(logFile, true));
+            BufferedWriter buff = new BufferedWriter(new FileWriter(LOGFILE, true));
             buff.append(msg);
             buff.newLine();
             buff.close();
@@ -394,8 +394,5 @@ public class MainActivity extends AppCompatActivity {
         catch (IOException e) {
             e.printStackTrace();
         }
-
     }
-
-
 }
